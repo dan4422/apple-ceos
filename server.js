@@ -25,7 +25,7 @@ app.use(express.static('./public'))
 app.get('/', (req,res) => {
   const name = req.query.name
   if (name) {
-    const ceoDetail = ceo.find(c => c.name.toLowerCase() == name.toLowerCase())
+    const ceoDetail = ceo.find(c => c.name.toLowerCase().includes(name.toLowerCase()))
     if (!ceoDetail) {
       res.status(404).send("There's no CEO named " + name)
       return
