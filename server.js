@@ -26,6 +26,10 @@ app.get('/', (req,res) => {
   const name = req.query.name
   if (name) {
     const ceoDetail = ceo.find(c => c.name.toLowerCase() == name.toLowerCase())
+    if (!ceoDetail) {
+      res.status(404).send("There's no CEO named " + name)
+      return
+    }
     res.render('ceo-details', {
       partials,
       locals: {
@@ -34,15 +38,16 @@ app.get('/', (req,res) => {
       }
     })
     return
+  } else {
+    res.render('home', {
+      partials,
+      locals: {
+        ceo,
+        title: "Apple CEO Homepage!",
+      }
+    })
+    return
   }
-
-  res.render('home', {
-    partials,
-    locals: {
-      ceo,
-      title: "Apple CEO Homepage!",
-    }
-  })
 }
 )
 
